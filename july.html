@@ -1,0 +1,150 @@
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>{block:IndexPage}{Title}{/block:IndexPage}{block:PostSummary}{PostSummary}{/block:PostSummary}</title>
+	{block:Description}<meta name="description" content="{MetaDescription}">{/block:Description}
+	<meta name="viewport" content="width=device-width">
+	<link rel="icon" href="{Favicon}">
+	<link rel="apple-touch-icon" href="{PortraitURL-128}">
+	<link rel="alternate" type="application/rss+xml" href="{RSS}">
+	<link rel="stylesheet" href="style.css">
+	<meta property="og:title" content="{block:IndexPage}{Title}{/block:IndexPage}{block:PostSummary}{PostSummary}{/block:PostSummary}">
+	<meta property="og:type" content="{block:IndexPage}blog{/block:IndexPage}{block:PermalinkPage}article{/block:PermalinkPage}">
+	{block:Description}<meta property="og:description" content="{MetaDescription}">{/block:Description}
+	<meta property="og:site_name" content="{Title}">
+	<style>
+		{CustomCSS}
+	</style>
+	{block:Hidden}{/block:Hidden}
+</head>
+<body class="{block:IndexPage}posts{/block:IndexPage}{block:PermalinkPage}post" id="{block:Posts}post-{PostID}{/block:Posts}{/block:PermalinkPage}">
+
+	{block:IndexPage}<header class="general" role="banner">
+
+		<h1 class="title"><a href="/">{Title}</a></h1>
+		{block:Description}<h2 class="description">{Description}</h2>{/block:Description}
+		<nav class="navigation" role="navigation">
+			<ul>
+				{block:HasPages}{block:Pages}<li class="page"><a href="{URL}">{Label}</a></li>{/block:Pages}{/block:HasPages}
+				{block:AskEnabled}<li class="ask"><a href="/ask">{AskLabel}</a></li>{/block:AskEnabled}
+				<li class="archive"><a href="/archive">Archive</a></li>
+			</ul>
+		</nav>
+
+	</header>
+
+	{block:Pagination}<nav class="pagenation prev">{block:PreviousPage}<a href="{PreviousPage}" rel="prev">Newer</a>{/block:PreviousPage}</nav>{/block:Pagination}
+
+	<main class="general hfeed" role="main">
+
+		<ol class="entry-list">
+
+			{block:Posts}<li class="entry hentry {PostType}" id="post-{PostID}">
+				{block:Date}<div class="date"><a href="{Permalink}"><time datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero}" class="published">{ShortMonth} {DayOfMonth}</time></a></div>{/block:Date}
+				<div class="post-type"><a href="{Permalink}">{block:Text}Text{/block:Text}{block:Photo}Photo{/block:Photo}{block:Panorama}Panorama{/block:Panorama}{block:Photoset}Photoset{/block:Photoset}{block:Quote}Quote{/block:Quote}{block:Link}Link{/block:Link}{block:Chat}Chat{/block:Chat}{block:Audio}Audio{/block:Audio}{block:Video}Video{/block:Video}{block:Answer}Question & Answer{/block:Answer}</a></div>
+				<div class="entry-title"><a href="{Permalink}">{block:Text}{block:Title}{Title}{/block:Title}{/block:Text}{block:Photo}{PhotoAlt}{/block:Photo}{block:Panorama}{PhotoAlt}{/block:Panorama}{block:Photoset}{PhotoAlt}{/block:Photoset}{block:Quote}{Quote}{/block:Quote}{block:Link}{Name}{/block:Link}{block:Chat}{block:Title}{Title}{/block:Title}{/block:Chat}{block:Answer}{Question}{/block:Answer}</a></div>
+			</li>
+			{/block:Posts}
+		</ol>
+
+	</main>
+
+	{block:Pagination}<nav class="pagenation next">{block:NextPage}<a href="{NextPage}" rel="next">Older</a>{/block:NextPage}</nav>{/block:Pagination}{/block:IndexPage}
+
+	{block:PermalinkPage}{block:Posts}<main class="general" role="main">
+
+		<article class="entry hentry {PostType} {TagsAsClasses}">
+
+			<header class="entry">
+
+				{block:Text}{block:Title}<h1 class="entry-title">{Title}</h1>{/block:Title}{/block:Text}
+				{block:Link}<h1 class="entry-title"><a href="{URL}" {Target}>{Name}</a></h1>{/block:Link}
+				{block:Chat}{block:Title}<h1 class="entry-title">{Title}</h1>{/block:Title}{/block:Chat}
+				{block:Answer}<h1 class="entry-title">{Question}</h1>
+				<p class="person asker"><img src="{AskerPortraitURL-128}">{Asker}</p>{/block:Answer}
+
+			</header>
+
+			<div class="entry entry-content">
+				{block:Text}{Body}{/block:Text}
+
+				{block:Photo}<figure class="{PostType}">
+					{LinkOpenTag}<img src="{PhotoURL-HighRes}" alt="{PhotoAlt}">{LinkCloseTag}
+					{block:Caption}<figcaption>
+						{Caption}
+					</figcaption>{/block:Caption}
+				</figure>{/block:Photo}
+
+				{block:Panorama}<figure class="{PostType}">
+					{LinkOpenTag}<img src="{PhotoURL-Panorama}" alt="{PhotoAlt}">{LinkCloseTag}
+					{block:Caption}<figcaption>
+						{Caption}
+					</figcaption>{/block:Caption}
+				</figure>{/block:Panorama}
+
+				{block:Photoset}<figure class="{PostType}">
+					{Photoset-700}
+					{block:Caption}<figcaption>
+						{Caption}
+					</figcaption>{/block:Caption}
+				</figure>{/block:Photoset}
+
+				{block:Quote}<blockquote class="{PostType} {Length}">
+					<p>{Quote}</p>
+					{block:Source}<p><cite>{Source}</cite></p>{/block:Source}
+				</blockquote>{/block:Quote}
+
+				{block:Link}{block:Thumbnail}<figure class="{PostType}">
+					<img src="{Thumbnail}" alt="{Name}">
+					{block:Host}<figcaption>{Host}</figcaption>{/block:Host}
+				</figure>{/block:Thumbnail}
+				{block:Description}<div class="description">
+					{Description}
+				</div>{/block:Description}{/block:Link}
+
+				{block:Chat}{block:Lines}<p class="{Alt}">{block:Label}<b>{Label}</b> {/block:Label}{Line}</p>{/block:Lines}{/block:Chat}
+
+				{block:Audio}<figure class="{PostType}">
+					{AudioPlayerBlack}
+					{block:Caption}<figcaption>
+						{Caption}
+					</figcaption>{/block:Caption}
+				</figure>{/block:Audio}
+
+				{block:Video}<figure class="{PostType}">
+					{Video-700}
+					{block:Caption}<figcaption>
+						{Caption}
+					</figcaption>{/block:Caption}
+				</figure>{/block:Video}
+
+				{block:Answer}<div class="Answer">{Answer}</div>
+				{block:Answerer}<p class="person answerer"><img src="{AnswererPortraitURL-128}">{Answerer}</p>{/block:Answerer}{/block:Answer}
+
+			</div>
+
+			<footer class="entry">
+				{block:Date}<p class="date"><a href="{Permalink}"><time datetime="{Year}-{MonthNumberWithZero}-{DayOfMonthWithZero}">{Month} {DayOfMonth}, {Year} {24Hour}:{Minutes}</time></a></p>{/block:Date}
+				{block:HasTags}<p class="tags">{block:Tags}<a href="{TagURL}" class="tag" rel="tag">#{Tag}</a>{/block:Tags}</p>{/block:HasTags}
+			</footer>
+
+		</article>
+
+	</main>{/block:Posts}{/block:PermalinkPage}
+
+	<footer class="general" role="contentinfo">
+
+		{block:IndexPage}{/block:IndexPage}
+
+		{block:PermalinkPage}<h1 class="title"><a href="/">{Title}</a></h1>
+		{block:Description}<h2 class="description">{Description}</h2>{/block:Description}
+		<nav class="navigation" role="navigation">
+			<ul>
+				{block:HasPages}{block:Pages}<li class="page"><a href="{URL}">{Label}</a></li>{/block:Pages}{/block:HasPages}
+			</ul>
+		</nav>{/block:PermalinkPage}
+
+	</footer>
+
+</body>
+</html>
